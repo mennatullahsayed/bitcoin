@@ -1,13 +1,6 @@
 <?php
 
-/*$feedback = mysqli_real_escape_string($connect, $_REQUEST['feedback']);
-$q="INSERT INTO `feedback`(`feedback`, `ID`) VALUES ('$feedback','20170559')";
 
-if(mysqli_query($connect, $q)){
-   
-} else{
-    echo "ERROR: Could not able to execute $q. " . mysqli_error($connect);
-}*/
 
 $connect=new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
 session_start();
@@ -16,15 +9,13 @@ session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 $username = mysqli_real_escape_string($connect, $_REQUEST['username']);
 $psw=mysqli_real_escape_string($connect, $_REQUEST['psw']);
-$_SESSION['login_user']= $psw;  
+$_SESSION['login_user']=$psw;
 //$q="SELECT * FROM `member` WHERE  `UserName` ='$username' ";	
-$q=mysqli_query($connect, "SELECT * FROM `member` WHERE  `UserName` ='$username' AND `ID` ='$psw' ");
+//SELECT `id` `userName` `block` FROM `person` WHERE 
+$q=mysqli_query($connect, "SELECT `id`, `userName` ,`block` FROM `person`   WHERE  `UserName` ='$username' AND `ID` ='$psw' AND `block`='1' AND `addUser` ='1' ");
 $r=mysqli_num_rows($q);
+$_SESSION['login_user']= $psw; 
 if($username=='Admin'&& $psw=='Admin'){
-
-//header('location:  transaction.php'); 
-
-
 header('location: addaccount.php');
  exit;	
 }
@@ -35,12 +26,19 @@ header('location: addaccount.php');
 header('location:  userhome.php'); exit;
 
 } else{
+$q=mysqli_query($connect, "SELECT `id`, `userName` ,`block` FROM `person`   WHERE  `UserName` ='$username' AND `ID` ='$psw' AND `block`='1' AND `addUser` ='1' ");
+$r=mysqli_num_rows($q);
+if($r==1 && $q)
+{
+//header("location:homepage.php");
+ 
+header('location:  userhome.php'); exit;
 
- header('location: signup.php');
- // echo "ERROR: Could not able to execute $q. " . mysqli_error($connect);
-	
-}
-}
+} else{
+//UPDATE `person` SET `block`='2' WHERE id ='20170559'
+$q=mysqli_query($connect, "UPDATE `person` SET `block`='0' WHERE id ='$psw' ");
+}}
+ }
 ?>
 
 	<!DOCTYPE html>
@@ -88,8 +86,8 @@ header('location:  userhome.php'); exit;
 				          <li><a href="signup.php">sign up</a></li>
 				          
 							<li><form action="homepage.php" method = "POST">
-      <input type="text" placeholder="type your passcode" name="username">
-      <input type="text" placeholder="type your passcode" name="psw">
+      <input type="text" placeholder="type your User name" name="username">
+      <input type="text" placeholder="type your ID" name="psw">
       <button formaction="homepage.php" type="submit">Login</button>
 								<p>forget your password? <a href="contactus.php">contact us</a></p>
     </form></li>
