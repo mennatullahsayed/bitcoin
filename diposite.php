@@ -1,7 +1,41 @@
 <?php
+/* if( $dep ==0){
+ 	    $q="INSERT INTO `transaction`(`id`, `amount`, `tranactionType`) VALUES ('$se','$amount1','$type')";
+		
+if(mysqli_query($connect, $q)){
+echo "4";}
+ }
+ else{
+ echo "5";
+ */
+	$connect  =new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
+session_start();
+$se=$_SESSION['login_user'];
+
+if($_SERVER["REQUEST_METHOD"] == "POST")
+{
+
+    $amount1= mysqli_real_escape_string($connect, $_REQUEST['amount']);
+    $otp= mysqli_real_escape_string($connect, $_REQUEST['otp']);
+    $type='deposit';
+    $tbl_name='transaction';
+	$dep=0;
+	$r=0;
+	
+var_dump ('SELECT `amount` FROM `transaction`  WHERE `id`='$se'');
+printf ("SELECT `amount` FROM `transaction`  WHERE `id`='$se'");
+//UPDATE `transaction` SET `id`='20170555',`amount`='100',`tranactionType`='hi' WHERE'id'=20170559;
+
+ //$r=$amount1+$dep;
+
+     $result= "UPDATE `transaction` SET `id`='$se',`amount`='$amount1',`tranactionType`='$type' WHERE 'id'='$se'";
+    $q="INSERT INTO `transaction`(`id`, `amount`, `tranactionType`) VALUES ('$se','$amount1','$type')";
 
 
-
+if(mysqli_query($connect, $q)){
+;}
+ //}
+}
 ?>
 	<!DOCTYPE html>
 	<html lang="zxx" class="no-js">
@@ -83,7 +117,7 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-8">
 								<h3 class="mb-30">diposite</h3>
-								<form action="">
+								<form action="" method ="POST">
 									<div class="mt-10">
 										<input type="text" name="amount" placeholder="amount" onfocus="this.placeholder = ''" onblur="this.placeholder = 'amount'" required class="single-input">
 									</div>
