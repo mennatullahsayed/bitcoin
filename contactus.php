@@ -1,13 +1,17 @@
 <?php
-//session_start();
+session_start();
+$se=$_SESSION['login_user'];
+
 $connect=new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
+if($_SERVER["REQUEST_METHOD"] == "POST"){
 $feedback = mysqli_real_escape_string($connect, $_REQUEST['feedback']);
-$q="INSERT INTO `feedback`(`feedback`, `ID`) VALUES ('$feedback','20170559')";
+$q="INSERT INTO `feedback`(`feedback`, `id`) VALUES ('$feedback','$se')";
 
 if(mysqli_query($connect, $q)){
    
 } else{
     echo "ERROR: Could not able to execute $q. " . mysqli_error($connect);
+}
 }
 ?>
 	<!DOCTYPE html>
