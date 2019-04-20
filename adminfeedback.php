@@ -1,6 +1,22 @@
 <?php
+$connect=new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
+   echo "Dfg";
+session_start();
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+$id = mysqli_real_escape_string($connect, $_REQUEST['id']);
+   echo "Dfg";
+//$signup = mysqli_real_escape_string($connect, $_REQUEST['signup']);
+$sql=mysqli_query($connect,"SELECT  `feedback` FROM `feedback` WHERE ' AND `ID`= '$id'");
+$q=mysqli_query($connect, "SELECT  `ID` FROM `feedback` WHERE  `ID`= '$id'");
 
-
+if((mysqli_num_rows($q)>=1) && $q){
+   //echo $sql;
+   header('location: homepage.php');  exit;
+} else{
+  header('location: signup.php');  exit;
+}
+ //header('location: signup.php');  exit;
+}
 
 ?>
 	<!DOCTYPE html>
@@ -82,22 +98,20 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-8">
 								<h3 class="mb-30">view feedback</h3>
-								<form action="">
-									<div class="mt-10">
-										<input type= "search" name="id" placeholder="type the id of member" onfocus="this.placeholder = ''" onblur="this.placeholder ='type the id of member'" required class="single-input">
+								<form action="adminfeedback.php" method="POST">
+									<div class="mt-10" >
+										<input type= "text" name="id" placeholder="type the id of member" onfocus="this.placeholder = ''" onblur="this.placeholder ='type the id of member'" required class="single-input">
+										<input type="submit"  name="signup" class="genric-btn primary circle">
 									</div>
+									<div>
+										<blockquote class="generic-blockquote"></blockquote></div>
 									
-									<div class="mt-10">
-										<input type="email" name="EMAIL"  placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required class="single-input">
-									</div>
 									
 										
 									
 										
 									
-									<div class="mt-10">
-										<textarea class="single-textarea" placeholder="Message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Message'" required></textarea>
-									</div>
+									
 									<!-- For Gradient Border Use -->
 									<!-- <div class="mt-10">
 										<div class="primary-input">
@@ -109,7 +123,7 @@
 									
 									
 									
-									<input type="submit"  name="sign up" class="genric-btn primary circle">
+									
 								</form>
 					
 							</div>
