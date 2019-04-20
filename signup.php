@@ -1,5 +1,8 @@
 
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\OAuth;
 
 session_start();
 $connect  =new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
@@ -12,16 +15,51 @@ $tel = mysqli_real_escape_string($connect, $_REQUEST['tel']);
 $address = mysqli_real_escape_string($connect, $_REQUEST['address']);
 $q="INSERT INTO `person`(`userName`, `Name`, `Address`, `Email`, `Phone`) VALUES ('$username','$full_name','$address ','$email ','$tel')";
 if(mysqli_query($connect, $q)){
+require 'Exception.php';
+require 'PHPMailer.php';
+require 'SMTP.php';
 
-$headers='From: '.$email.'\r\n';
-mail('mennasayed192@gmail.com','otp',$headers);
+$mail = new PHPMailer();
+$mail->isSMTP();
+$mail->Host = 'smtp.gmail.com';
+$mail->Port = 587;
+$mail->SMTPAuth = true;
+$mail->SMTPSecure = 'tls';
+$mail->SMTPDebug = 3;
+/* Username (email address). */
+$mail->Username = 'mennasayed192@gmail.com';// اميللك
 
+/* Google account password. */
+$mail->Password = 'testtestpass';//الباص
 
-   header('location: otp.php'); exit;
-} else{
-    echo "ERROR: Could not able to execute $q. " . mysqli_error($connect);
+/* Set the mail sender. */
+$mail->setFrom('mennasayed192@gmail.com');//اميللك
+
+/* Add a recipient. */
+
+$mail->addAddress('hoba.mostafa97@gmail.com');//الاميل الي هيتبعت ليه
+
+/* Set the subject. */
+$mail->Subject = 'Force';
+
+/* Set the mail message body. */
+$mail->Body = 'There is a great disturbance in the Force.';
+
+/* Finally send the mail. */
+if (!$mail->send())
+{
+   /* PHPMailer error. */
+   echo $mail->ErrorInfo;
+}}}
+/*else{
+    echo "done";
 }
+
+else{
+	header('location: signup.php');
 }
+*/
+
 
 ?>
 	<!DOCTYPE html>
@@ -219,5 +257,3 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="js/main.js"></script>	
 		</body>
 	</html>
-signup.php
-Displaying signup.php.
