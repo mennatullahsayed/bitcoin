@@ -1,20 +1,23 @@
 
 <?php
+/*
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\OAuth;
 
-session_start();
+*/
 $connect  =new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 $username = mysqli_real_escape_string($connect, $_REQUEST['username']);
-$full_name = mysqli_real_escape_string($connect, $_REQUEST['full_name']);
+$ID = mysqli_real_escape_string($connect, $_REQUEST['ID']);
 $email = mysqli_real_escape_string($connect, $_REQUEST['email']);
 $tel = mysqli_real_escape_string($connect, $_REQUEST['tel']);
 $address = mysqli_real_escape_string($connect, $_REQUEST['address']);
-$q="INSERT INTO `person`(`userName`, `Name`, `Address`, `Email`, `Phone`) VALUES ('$username','$full_name','$address ','$email ','$tel')";
+//INSERT INTO `person`(`id`, `address`, `email`, `phone`, `userName`, `addUser`, `block`) VALUES ('$ID','$address','$email ','$tel','$username','0','1')
+$q="INSERT INTO `person`(`id`, `address`, `email`, `phone`, `userName`, `addUser`, `block`) VALUES ('$ID','$address','$email ','$tel','$username','0','1')";
 if(mysqli_query($connect, $q)){
+/*
 require 'Exception.php';
 require 'PHPMailer.php';
 require 'SMTP.php';
@@ -26,41 +29,39 @@ $mail->Port = 587;
 $mail->SMTPAuth = true;
 $mail->SMTPSecure = 'tls';
 $mail->SMTPDebug = 3;
-/* Username (email address). */
+/* Username (email address). 
 $mail->Username = 'mennasayed192@gmail.com';// اميللك
 
-/* Google account password. */
 $mail->Password = 'testtestpass';//الباص
 
-/* Set the mail sender. */
+
 $mail->setFrom('mennasayed192@gmail.com');//اميللك
 
-/* Add a recipient. */
 
-$mail->addAddress('hoba.mostafa97@gmail.com');//الاميل الي هيتبعت ليه
 
-/* Set the subject. */
+$mail->addAddress('maroemad40@gmail.com');//الاميل الي هيتبعت ليه
+
 $mail->Subject = 'Force';
 
-/* Set the mail message body. */
+
 $mail->Body = 'There is a great disturbance in the Force.';
 
-/* Finally send the mail. */
 if (!$mail->send())
 {
-   /* PHPMailer error. */
+   
    echo $mail->ErrorInfo;
 }}}
 /*else{
     echo "done";
-}
+}*/
 
+}
 else{
 	header('location: signup.php');
+
 }
-*/
 
-
+}
 ?>
 	<!DOCTYPE html>
 	<html lang="zxx" class="no-js">
@@ -141,7 +142,7 @@ else{
 									
 										<input type="text" name="username" placeholder="full Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'full Name'" required class="single-input">
 									</div><div class="mt-10">
-										<input type="text" name="full_name" placeholder="set username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'set username'" required class="single-input">
+										<input type="text" name="ID" placeholder="ID" onfocus="this.placeholder = ''" onblur="this.placeholder = 'set username'" required class="single-input">
 									
 									</div>
 									
