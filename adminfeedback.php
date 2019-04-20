@@ -1,23 +1,24 @@
 <?php
 $connect=new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
-   echo "Dfg";
+   
 session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 $id = mysqli_real_escape_string($connect, $_REQUEST['id']);
-   echo "Dfg";
 //$signup = mysqli_real_escape_string($connect, $_REQUEST['signup']);
-$sql=mysqli_query($connect,"SELECT  `feedback` FROM `feedback` WHERE ' AND `ID`= '$id'");
+$sql=mysqli_query($connect,"SELECT  `feedback` FROM `feedback` WHERE  `ID`= '$id'");
 $q=mysqli_query($connect, "SELECT  `ID` FROM `feedback` WHERE  `ID`= '$id'");
 
 if((mysqli_num_rows($q)>=1) && $q){
-   //echo $sql;
-   header('location: homepage.php');  exit;
-} else{
-  header('location: signup.php');  exit;
-}
+while($row=mysqli_fetch_array($sql)){
+$sitestreet= $row['feedback'];
+ //  echo $sitestreet;
+ //  header('location: homepage.php');  exit;
+} 
+}else{
+  header('location: homepage.php');  exit;
  //header('location: signup.php');  exit;
 }
-
+}
 ?>
 	<!DOCTYPE html>
 	<html lang="zxx" class="no-js">
@@ -104,7 +105,7 @@ if((mysqli_num_rows($q)>=1) && $q){
 										<input type="submit"  name="signup" class="genric-btn primary circle">
 									</div>
 									<div>
-										<blockquote class="generic-blockquote"></blockquote></div>
+										<input id="Text1" type="text" myTextBox.ReadOnly = TRUE; readonly  value='<?php echo $sitestreet; ?>' ></div>
 									
 									
 										
