@@ -1,5 +1,39 @@
 <?php
+session_start();
+$se=$_SESSION['login_user'];
+// example for  menna
+//load important  file  in each file  use  data base
+$file_name ='DataBase.php';
 
+$file_name2= 'info.php';
+//call data base clase
+    try {
+    include_once  $file_name ;
+     } catch (Exception $e) {
+     echo "error in file name";
+   }
+   $amount1= mysqli_real_escape_string($connect, $_REQUEST['amount']);
+    $database = DataBase :: getInstance($file_name2);
+    //put quary which  you want to use
+     $query = "SELECT `addUser` FROM `person`";
+    // print_r("ffff");
+#exucute query
+      $var = $database->fetch_query($query);
+      $amount = " " ;
+	  
+      foreach ( $var as $v){
+    
+      $amount =  $v['amount'] + $amount;
+	
+}
+      var_dump($amount);
+	 echo $amount;
+
+
+
+if(mysqli_query($connect, $q)){
+header('location: homepage.php');  exit;
+;}
 
 
 ?>
