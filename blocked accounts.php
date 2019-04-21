@@ -1,8 +1,4 @@
-<?php
 
-
-
-?>
 	<!DOCTYPE html>
 	<html lang="zxx" class="no-js">
 	<head>
@@ -79,15 +75,29 @@
 							<div class="progress-table" style="margin-left: 100px;">
 								<div class="table-head">
 									
-									<div class="country">name</div>
-									<div class="visit">id</div>
-									<div class="percentage">state</div>
-								</div>
-								<div class="table-row">
-									<div class="country"> name</div>
-									<div class="visit">645032</div>
-									<div class="percentage">
-										
+									<?php
+$connect=new mysqli("127.0.0.1", "bitcoin", "bitcoin", "bitcoin");
+   
+session_start();
+
+$se=$_SESSION['login_user'];
+$sql="SELECT  * FROM `person` WHERE `block`='0'";
+$result = $connect->query($sql);
+ echo "<table>";
+
+ while($row = mysqli_fetch_array($result))
+
+          {
+		  
+          echo "<tr><td>" . $row['id'] . "</td> " ; //these are the fields that you have stored in your database table employee
+		 echo "addUser";
+		  echo "<tr><td>  " . $row['addUser'] . "</td> " ;  
+		echo "block";
+		  echo "<tr><td> " . $row['block'] . "</td> " ; 
+          }
+ echo "</table>";
+
+?>
 											<button >unblock</button>
 										
 									</div>
@@ -139,7 +149,9 @@
 									        <button class="genric-btn primary circle arrow"><span class="lnr lnr-arrow-right"></span></button>
 									      </div>
 									    </div>
-									      <div class="info mt-20"></div>									    
+										
+
+							      <div class="info mt-20"></div>									    
 									  </form>
 
 								</div>
@@ -183,3 +195,5 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			<script src="js/main.js"></script>	
 		</body>
 	</html>
+									      							    
+	
